@@ -1,0 +1,62 @@
+
+        		<table class="table table-sm mb-0">
+          		  <thead class="thead-">
+          			<tr>
+               			  <th> Categoría   Concepto  Cuenta</th>
+                                <th> Ligas </th>
+                                <th> Detalle </th>
+                                <th style="width:40%"> Justificación       </th>
+          			</tr>
+          		  </thead>
+          		  <tbody>
+<?php if (  count($this->ObjCasos) > 0 ){
+               foreach ($this->ObjCasos as $key => $value) {
+?>
+                    <tr class="timeline-date">
+          			  <td>
+                                   <ul>
+                                        <li style="list-style:none;"><i class="fas fa-arrow-right"></i>  <?php echo $value['CATEGSUBCAT']; ?> </li>
+                                        <li style="list-style:none;"><i class="fas fa-arrow-right"></i> <?php echo $value['CONCEPTO']; ?></li>
+                                        <li style="list-style:none;"><i class="fas fa-arrow-right"></i> <?php echo $value['FCCREDITOCARTERA']; ?></li>
+                                   </ul>
+                            </td>
+                           <td>
+                           <ul>
+                                <li >  <a target='_blank' href='http://quasar.pendulum.com.mx:59001/cas/aplicacion/url/aplicacionExterna/?dmacct=<?php  echo $value['FCCREDITOCARTERA']; ?>&user=<?php  echo $value['USERS']; ?>|COB|1&procedencia=EL1'>X5</a> </li>
+                                <li > <a target='_blank' href='http://quasar.pendulum.com.mx:59001/cas/aplicacion/url/aplicacionExterna/?dmacct=<?php  echo $value['FCCREDITOCARTERA']; ?>&user=<?php  echo $value['USERS']; ?>&procedencia=COB'>X1</a></li>
+                                     <?php if ( $value['ALARMA'] == 8 ){//pagos dobles?>
+                                          <li>
+                                               <a target='_blank' href='http://quantum1.pendulum.com.mx/pendulum/procesoGastos/ajax/muestra_pagosdobles.php?casoid=<?=$value['IDGASTOMAIN']; ?>&dmacct=<?=$value['FCCREDITOCARTERA']; ?>&concepto=<?= $value['IDCONCEPTO']; ?>&user=processm'>PGO DBL</a>
+                                          </li>
+                                     <?php }?>
+                           </ul>
+                           </td>
+                           <td> <?php echo $value['FNIMPORTE']; ?> </td>
+                           <td>
+                                   <div class="form-group">
+                                       <div class="form-label-group">
+                                               <?php if ( $value['ALARMA'] == 6  || $value['ALARMA'] == 7 || $value['ALARMA'] == 8 || $value['ALARMA'] == 10 || $value['ALARMA'] == 34 || $value['ALARMA'] == 44 || $value['ALARMA'] == 45 || $value['ALARMA'] == 68 || $value['ALARMA'] == 46 ){?>
+                                                       <textarea id="inpJus_<?= $value['ALARMA']; ?>_<?= $value['FCCREDITOCARTERA']; ?>" name="inpJus" data-id_etapa="<?php  echo $value['FCCREDITOCARTERA']; ?>"   data-IDALARMA="<?php  echo $value['ALARMA']; ?>"
+                                                                                                              data-CREDITO="<?php  echo $value['FCCREDITOCARTERA']; ?>"  data-IDCONCEPTO="<?php  echo $value['IDCONCEPTO']; ?>"
+                                                                                                              data-IDGASTOMAIN="<?php  echo $value['IDGASTOMAIN']; ?>"   data-FECHAREGISTRO="<?php  echo $value['FECHAREGISTRO']; ?>"
+                                                                                                              data-IDFACTURAASIGNACION="<?php  echo $value['IDFACTURAASIGNACION']; ?>" data-COMENTARIO_OLD="<?php echo utf8_encode($value['CAMPOJUSTI']); ?>"
+                                                                                                              class="form-control soloLetrasNumeros btnJustificacion" cols="5" rows="5" maxlength="1500" ><?php echo utf8_encode($value['CAMPOJUSTI']); ?></textarea>
+                                               <?php }else{
+                                                    echo "NO APLICA";
+                                               }?>
+
+                                       </div>
+                                   </div>
+                           </td>
+          		</tr>
+<?php        }//fin del ocicloselob
+      } else{
+     ?>
+     <tr colspan="6">No hay información disponible.</tr>
+<?php }?>
+
+
+          		  </tbody>
+      		</table>
+  	  </div>
+	</div>

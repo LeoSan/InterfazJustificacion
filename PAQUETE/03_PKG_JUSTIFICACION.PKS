@@ -1,0 +1,49 @@
+CREATE or REPLACE PACKAGE   PENDUPM.PKG_JUSTIFICACION IS
+
+/*
+	Interfaz JUSTIFICACION
+	Fecha de creacion:    20 - Marzo - 2019
+*/
+
+ TYPE T_CURSOR IS REF CURSOR;
+
+   TYPE JUSTIFICAALERTA IS RECORD
+   (
+      rIdGasto      NUMBER (15),
+      rConcepto     NUMBER (15),
+      rAlerta       NUMBER (15),
+      rCredito      VARCHAR2 (40),
+      rComentario   VARCHAR2 (1999),
+      rFechaRegistro VARCHAR2 (30), 
+      rIdfacturacion NUMBER (15),
+      rComentarioOld VARCHAR2 (1999)
+   );
+
+   TYPE TABJUSTIFICAALERTA IS TABLE OF JUSTIFICAALERTA
+      INDEX BY BINARY_INTEGER;
+
+   TBLJUSTIFICAALERTA     TABJUSTIFICAALERTA;
+   
+   
+
+ --Procesos OBTENER 
+
+	PROCEDURE obtenerAutorizadores(resultDatos IN OUT T_CURSOR, pGASTO INTEGER DEFAULT '');
+    
+    PROCEDURE obtenerArregloMasivo(resultDatos IN OUT T_CURSOR, pGASTO INTEGER DEFAULT '', pCONDICION VARCHAR2 DEFAULT '', pINNER VARCHAR2 DEFAULT '', pJUSTIFICACION VARCHAR2 DEFAULT '' );
+    
+    PROCEDURE obtenerAutorizadoresCasos(resultDatos IN OUT T_CURSOR, pGASTO INTEGER DEFAULT '', pCONDICION VARCHAR2 DEFAULT '', pINNER VARCHAR2 DEFAULT '', pRESULTADO VARCHAR2 DEFAULT '', pJUSTIFICACION VARCHAR2 DEFAULT '', pUSUARIO VARCHAR2 DEFAULT '', pALARMA INTEGER DEFAULT '', pUSUARIOX2X5 VARCHAR2 DEFAULT '' );
+
+--Procesos INSERT
+
+--Procesos DELETE
+
+-- Procesos Update 
+
+   PROCEDURE setJustificaAlerta (
+      arrDetalle       PKG_JUSTIFICACION.TABJUSTIFICAALERTA,
+      pnUsuario        INTEGER,
+      psError      OUT VARCHAR2);
+   
+
+END PKG_JUSTIFICACION;

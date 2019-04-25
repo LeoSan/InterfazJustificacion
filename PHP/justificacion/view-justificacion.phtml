@@ -1,0 +1,131 @@
+<style>
+ul {
+     margin: 0px;
+     padding: 0px;
+}
+li {
+     margin: 0px;
+     padding: 0px;
+}
+
+#archivo{
+	background-color: #ffffff !important;
+}
+.be-scroll-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 10px;
+    right: 52%;
+    color: #fff;
+    background-color: rgba(0,0,0,.6);
+    padding: 0 14px;
+    display: none;
+    -webkit-transition: background-color .2s ease;
+    transition: background-color .2s ease;
+    border-radius: 4px;
+    z-index: 1071;
+}
+.be-scroll-top:hover { color: #fff; background-color: rgba(0,0,0,.8); }
+
+.be-scroll-down {
+    cursor: pointer;
+    position: fixed;
+    bottom: 10px;
+    right: 46%;
+    color: #fff;
+    background-color: rgba(0,0,0,.6);
+    padding: 0 14px;
+    display: none;
+    -webkit-transition: background-color .2s ease;
+    transition: background-color .2s ease;
+    border-radius: 4px;
+    z-index: 1071;
+}
+.be-scroll-down:hover { color: #fff; background-color: rgba(0,0,0,.8); }
+
+
+</style>
+<div class="content-asignacion center col-xs-12 col-sm-12  col-md-12 col-lg-12" id="catalogo-content">
+    <h1 class="section-title text-center"> REGISTRO DE JUSTIFICACIONES </h1>
+    <span id="msjInterfaz"> </span>
+    <form id="formJustificacion" name="formJustificacion">
+                <!-- campos para ocultar  -->
+                <input type="hidden" id="hidGasto"   name="hidGasto"     value="<?=$this->idgasto?>" />
+                <input type="hidden" id="hidUsuario" name="hidUsuario"   value="<?=$this->cvetra?>" />
+    </form>
+
+<!-- #Fila 2-->
+            <div class="row">
+    	        <div class="col-lg-12">
+                    <div id="accordion2" class="card-expansion">
+                        <?php foreach ($this->ObjAutorizadores as $key => $filas) {
+
+
+                          if ( $filas['TPOAUT'] == 6  || $filas['TPOAUT'] == 7 || $filas['TPOAUT'] == 8 || $filas['TPOAUT'] == 10 || $filas['TPOAUT'] == 34 || $filas['TPOAUT'] == 44 || $filas['TPOAUT'] == 45 || $filas['TPOAUT'] == 68 || $filas['TPOAUT'] == 46 ){
+                                          $btnPermiteComentario = ' ';
+                                          $btnPermiteGuardar = '';
+                                          $btnPermiteMensaje = 'Ingrese un comentario general para la justificación.';
+                                        }else{
+                                          $btnPermiteComentario = 'disabled="disabled"';
+                                          $btnPermiteGuardar = 'style="display: none;"';
+                                          $btnPermiteMensaje = 'No se permiten comentarios para este tipo de alerta.';
+                                        }
+
+                          ?>
+                                <!-- #Inicio 1-->
+                        			<div class="card card-expansion-item expanded">
+                        			  <div class="card-header border-0" id="headingOne<?=$key?>">
+                            				<span class="btn btn-reset d-flex justify-content-between w-100  btnRecargaCategoria" data-toggle="collapse" data-target="#collapseOne<?=$key?>" aria-expanded="false" aria-controls="collapseOne<?=$key?>"  data-id_etapa="<?php  echo $filas['IDETAPA']; ?>" data-id_tipoAut="<?php  echo $filas['TPOAUT']; ?>"  >
+                                                <span> <?php echo $filas['NMSUBTASK']; ?>  </span>
+                                                <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span>
+                                            </span>
+
+                                                <div class="row">
+                                                        <div class="col-md-2">
+                                                        <div class="form-group">
+                                                        <div class="form-label-group">
+                                                              <span class="timeline-date">Total de cuentas : <?=$filas['totalRegistros']?></span>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-md-8">
+                                                        <div class="form-group">
+                                                        <div class="form-label-group">
+                                                              <input id="inpJustiMasivo_<?=$filas['IDETAPA']?>_<?=$filas['TPOAUT']?>" name="inpJustiMasivo_<?=$filas['IDETAPA']?>_<?=$filas['TPOAUT']?>"   type="text" class="form-control soloLetrasNumeros"  maxlength="1500" placeholder="Ingreso justificación"  <?=$btnPermiteComentario?> >
+                                                              <label><?=$btnPermiteMensaje?></label>
+
+                                                        </div>
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-md-1">
+                                                        <div class="form-group">
+                                                        <div class="form-label-group">
+                                                              <button id="check_masivo_<?=$filas['IDETAPA']?>_<?=$filas['TPOAUT']?>" name="check_masivo_<?=$filas['IDETAPA']?>_<?=$filas['TPOAUT']?>"  data-id_etapa="<?php  echo $filas['IDETAPA']; ?>" data-id_tipoAut="<?php  echo $filas['TPOAUT']; ?>" type="button" class="btn btn-primary btnCheckMasivo"  <?=$btnPermiteGuardar?>  >Guardar</button>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                </div>
+                        			  </div>
+                        			  <div id="collapseOne<?=$key?>" class="collapse" aria-labelledby="headingOne<?=$key?>" data-parent="#accordion<?=$key?>" >
+                                              <div class="card card-fluid">
+                                              	  <div id="contenedorCasos_<?php  echo $filas['TPOAUT']; ?>" class="table-responsive" >
+
+                                              	  </div>
+                                          	</div>
+                        			  </div>
+                        			</div>
+                    			<!-- #Fin 1-->
+                        <?php }?>
+
+            		</div>
+
+            	</div>
+        </div>
+
+    <div class="be-scroll-down"><i class="fas fa-angle-down" style="font-size: 48px;"></i></div>
+    <div class="be-scroll-top"><i class="fas fa-angle-up" style="font-size: 48px;"></i></div>
+
+    <script type="text/javascript" src="<?php echo $this->baseUrl; ?>/js/gastos/justificacion/view-justificacion.js?v=1.0"></script>
+</div>
